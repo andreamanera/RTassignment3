@@ -139,7 +139,9 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/final_assignment_node.cpp)
 add_executable(ReachPosition src/ReachPosition.cpp)
+add_executable(KeyboardDrive src/KeyboardDrive.cpp)
 add_executable(menu src/menu.cpp)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -151,6 +153,7 @@ add_executable(menu src/menu.cpp)
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(ReachPosition ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(KeyboardDrive ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(menu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
@@ -158,6 +161,9 @@ add_dependencies(menu ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARG
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(ReachPosition
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(KeyboardDrive
   ${catkin_LIBRARIES}
 )
 target_link_libraries(menu

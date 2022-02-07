@@ -207,7 +207,7 @@ int main(int argc, char **argv)
     //used to randomize id
     srand(time(NULL));
 
-    ros::init(argc, argv, "reachPoint");
+    ros::init(argc, argv, "ReachPosition");
     ros::NodeHandle node_handle;
 
     // the goal position is published in the "/move_base/goal" topic

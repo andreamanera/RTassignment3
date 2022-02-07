@@ -45,13 +45,13 @@ int main(int argc, char **argv)
         switch (Show_Menu())
         {
         case '1':
-            //launch reachPoint node
+            //launch ReachPosition node
             system("rosrun RTassignment3 ReachPosition");
         break;
         
         case '2':
-            //launch driveWithKeyboard node
-            system("rosrun RTassignment3 driveWithKeyboard");
+            //launch KeyboardDrive node
+            system("rosrun RTassignment3 KeyboardDrive");
         break;
         
         case '3':
