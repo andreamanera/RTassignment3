@@ -19,7 +19,7 @@ Select one modality and then press enter:
 int Show_Menu()
 {
     // The system() function is a part of the C/C++ standard library. It is used to pass the commands that can be executed
-    // in the command processor or the terminal of the operating system, and finally returns the command after it has been completed.
+    // in the terminal of the operating system, and finally returns the command after it has been completed.
     
     // to clear the console
     system("clear");
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
         
         case '3':
             //launch driveWithKeyboardAssisted node
-            system("rosrun RTassignment3 driveWithKeyboardAssisted");
+            system("rosrun RTassignment3 KeyboardDriveObst");
         break;
         
         case '4':
