@@ -69,7 +69,7 @@ float Distance(float obs_dist[], int val_min, int val_max)
 	return dist_min;
 }
 
-void checkWalls(const sensor_msgs::LaserScan::ConstPtr &msg)
+void check_walls(const sensor_msgs::LaserScan::ConstPtr &msg)
 {
 	//variables for the closest obstacle on robot right, left and front
 	float dist_min_right, dist_min_left, dist_min_front;
@@ -282,7 +282,7 @@ int main(int argc, char **argv)
     ros::NodeHandle node_handle;
     
     //subribes to /scan topic
-    ros::Subscriber subscriber = node_handle.subscribe("/scan", 500, checkWalls);
+    ros::Subscriber subscriber = node_handle.subscribe("/scan", 500, check_walls);
 
     //this node will publish updated into /cmd_vel topic
     publisher = node_handle.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
