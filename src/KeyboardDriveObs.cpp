@@ -14,6 +14,9 @@ double turn_velocity = 0.5;
 int linear = 0; //linear direction
 int angular =0; //angular direction
 
+// defining threshold for wall distance
+double th = 1;
+
 // defining variable for Twist
 geometry_msgs::Twist vel;
 
@@ -43,6 +46,72 @@ int getch(void)
     return ch;
 }
 
+// function used to find the closest obstacle in each section of the ranges array
+float Distance(float obs_dist[], int val_min, int val_max)
+{
+
+	//as the minimum distance is set a large value that will then be compared
+	//with all the values between val_min and val_max in the ranges array
+	
+	float dist_min = 30.0;
+	
+	//thanks to the for loop and the if statement all values in the ranges
+	//array are compared so as to find the smallest
+	
+	for(int i = val_min; i <= val_max; i++){
+	
+		if(obs_dist[i] <= dist_min){
+		
+			dist_min = obs_dist[i];
+		}
+	}
+	
+	return dist_min;
+}
+
+void checkWalls(const sensor_msgs::LaserScan::ConstPtr &msg)
+{
+	//variables for the closest obstacle on robot right, left and front
+	float dist_min_right, dist_min_left, dist_min_front;
+	
+	// array wich will be filled with the elements of ranges
+	float scanner[721];
+	
+	// thanks to this loop scanner array is filled with the element of ranges
+	for(int i = 0; i < 722; i++){
+		scanner[i] = msg->ranges[i];
+	}
+	
+	// Call at the Distance function to calculate the minimum
+	// distance from the obstacles on robot front, right and left
+	dist_min_right = Distance(scanner, 0, 159);
+	dist_min_left = Distance(scanner, 561, 720);
+	dist_min_front = Distance(scanner, 281, 440);
+	
+	 //warn user
+	if ((dist_min_front < th && linear > 0) || ((dist_min_left < th) && angular > 0) || ((dist_min_right < th) && angular < 0))
+		std::cout << "Wall detected!\n";
+		         
+
+	//if the nearest wall in front of the robot is too close, the robot can only turn
+	if (dist_min_front < th && linear > 0){
+	    
+		linear = 0;
+	}
+	
+	//if the nearest wall on the left or on the right is too close, the robot can only go straight
+	if (((dist_min_left < th) && angular > 0) || ((dist_min_right < th) && angular < 0)){
+	
+		angular = 0;
+	}
+	
+	// compute new velocities
+   	vel.linear.x = velocity * linear;
+    	vel.angular.z = turn_velocity * angular;
+    
+    	// publish the new velocity
+    	publisher.publish(vel);
+}
 
 // function used to associate the input from keyboard with the correct command
 
@@ -211,13 +280,18 @@ int main(int argc, char **argv)
     system("clear");
     ros::init(argc, argv, "KeyboardDrive");
     ros::NodeHandle node_handle;
+    
+    //subribes to /scan topic
+    ros::Subscriber subscriber = node_handle.subscribe("/scan", 500, checkWalls);
 
     //this node will publish updated into /cmd_vel topic
     publisher = node_handle.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 
     // while loop used to get input endless
+    ros::AsyncSpinner spinner(4);
+    spinner.start();
     while (true)
         get_input();
-
+	spinner.stop();
     return 0;
 }
