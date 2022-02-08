@@ -11,8 +11,8 @@ double velocity = 0.5;
 double turn_velocity = 1;
 
 // defining variables used to define the direction
-int lin=0; //linear direction
-int ang =0; //angular direction
+int linear = 0; //linear direction
+int angular =0; //angular direction
 
 // defining variable for Twist
 geometry_msgs::Twist vel;
@@ -25,11 +25,9 @@ int getch(void)
     struct termios oldt;
     struct termios newt;
 
-    // Store old settings, and copy to new settings
     tcgetattr(STDIN_FILENO, &oldt);
     newt = oldt;
 
-    // Make required changes and apply the settings
     newt.c_lflag &= ~(ICANON | ECHO);
     newt.c_iflag |= IGNBRK;
     newt.c_iflag &= ~(INLCR | ICRNL | IXON | IXOFF);
@@ -38,106 +36,142 @@ int getch(void)
     newt.c_cc[VTIME] = 0;
     tcsetattr(fileno(stdin), TCSANOW, &newt);
 
-    // Get the current character
     ch = getchar();
 
-    // Reapply old settings
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 
     return ch;
 }
 
+
+// function used to associate the input from keyboard with the correct command
+
 void choose_input(char input)
 {
-    //set linear and angular direction according to user input
+
     switch (input)
     {
+	    case 'A':
+	    case 'a':
+		velocity *= 1.1;
+		turn_velocity *= 1.1;
+            break;
+            
+            case 'D':
+	    case 'd':
+		velocity *= 0.9;
+		turn_velocity *= 0.9;
+            break;
+            
+            case 'W':
+	    case 'w':
+		velocity *= 1.1;
+	    break;
+	    
+	    case 'S':
+	    case 's':
+		velocity *= 0.9;
+	    break;
+	    
+	    case 'Q':
+	    case 'q':
+		turn_velocity *= 1.1;
+	    break;
+	    
+	    case 'C':
+	    case 'c':
+		turn_velocity *= 0.9;
+	    break;
+	    
+	    case 'R':
+	    case 'r':
+		velocity = 0.5;
+		turn_velocity = 1;
+	    break;
+	    
+	    case 'Y':
+	    case 'y':
+		linear = 1;
+		angular = 1;
+	    break;
+	    
+	    case 'U':
+	    case 'u':
+		lineat = 1;
+		angular = 0;
+	    break;
+	    
+	    case 'I':
+	    case 'i':
+		linear = 1;
+		angular = -1;
+	    break;
+	    
+	    case 'H':
+	    case 'h':
+		linear = 0;
+		angular = 1;
+	    break;
+	    
+	    case 'J':
+	    case 'j':
+		linear = 0;
+		angular = 0;
+	    break;
+	    
+	    case 'K':
+	    case 'k':
+		linear = 0;
+		angular = -1;
+	    break;
+	    
+	    case 'B':
+	    case 'b':
+		linear = -1;
+		angular = 1;
+	    break;
+	    
+	    case 'N':
+	    case 'n':
+		linear = -1;
+		angular = 0;
+	    break;
+	    
+	    case 'M':
+	    case 'm':
+		linear = -1;
+		angular = -1;
+	    break;
+	    
+	    case 'E':
+	    case 'e': 
 
-    case 'a':
-        velocity *= 1.1;
-        turn_velocity *= 1.1;
-        break;
-    case 'd':
-        velocity *= 0.9;
-        turn_velocity *= 0.9;
-        break;
-    case 'w':
-        velocity *= 1.1;
-        break;
-    case 's':
-        velocity *= 0.9;
-        break;
-    case 'q':
-        turn_velocity *= 1.1;
-        break;
-    case 'c':
-        turn_velocity *= 0.9;
-        break;
-    case 'r':
-        velocity = 0.5;
-        turn_velocity = 1;
-        break;
-    case 'y':
-        lin = 1;
-        ang = 1;
-        break;
-    case 'u':
-        lin = 1;
-        ang = 0;
-        break;
-    case 'i':
-        lin = 1;
-        ang = -1;
-        break;
-    case 'h':
-        lin = 0;
-        ang = 1;
-        break;
-    case 'j':
-        lin = 0;
-        ang = 0;
-        break;
-    case 'k':
-        lin = 0;
-        ang = -1;
-        break;
-    case 'b':
-        lin = -1;
-        ang = 1;
-        break;
-    case 'n':
-        lin = -1;
-        ang = 0;
-        break;
-    case 'm':
-        lin = -1;
-        ang = -1;
-        break;
-    case '\x03': //CTRL-C
-
-        //stop robot and exit
-        vel.angular.z = 0;
-        vel.linear.x = 0;
-        publisher.publish(vel);
-        system("clear");
-        ros::shutdown();
-        exit(0);
-        break;
-    default:
-        //stop robot
-        lin = 0;
-        ang = 0;
-        break;
-    }
+		//stop robot and exit
+		vel.angular.z = 0;
+		vel.linear.x = 0;
+		publisher.publish(vel);
+		system("clear");
+		ros::shutdown();
+		exit(0);
+            break;
+            
+	    default:
+		//stop robot
+		linear = 0;
+		angular = 0;
+		break;
+	}
 }
+
+// function used to display the menu and compute the velocity with the input taken by the keyboard
 
 void get_input()
 {
 
     //display instructions
-    std::cout << "Drive the robot in the envitonment using your keyboard\n\n";
+    std::cout << "Drive the robot in the envitonment using your keyboard\n";
 
-    std::cout << R"(Use the commands below as a joystick
+    std::cout << R"(Move the robot using these commands as you are using a joystick
     
                 y    u    i
                 h    j    k
@@ -145,18 +179,16 @@ void get_input()
                 
 Press:
 a : increase angular and linear velocities by 10%
-a : decrease angular and linear velocities by 10%
+d : decrease angular and linear velocities by 10%
 r : reset angular and linear velocities at the default values
 w : increase linear velocity by 10%
 s : decrease linear velocity by 10%
 q : increase angular velocity by 10%
 c : decrease angular velocity by 10%
-press CTRL-C to quit
+press e to quit
 
 ALL OTHER KEYS WILL STOP THE ROBOT
-)";
-    std::cout << "\ncurrent velocities:\tspeed " << velocity << "\tturn " << turn_velocity << "\n";
-
+	)";
     // wait for user input
     char input;
     input = getch();
@@ -165,10 +197,10 @@ ALL OTHER KEYS WILL STOP THE ROBOT
     choose_input(input);
 
     // compute new velocities
-    vel.linear.x = velocity * lin;
-    vel.angular.z = turn_velocity * ang;
+    vel.linear.x = velocity * linear;
+    vel.angular.z = turn_velocity * angular;
     
-    // publish the new velocity in the topic vel
+    // publish the new velocity
     publisher.publish(vel);
 
     system("clear");
