@@ -34,7 +34,7 @@ int flag_for_goal;
 
 void detect_input()
 {
-    //catch an user input
+    //get an user input
     char input_ch = getchar();
 
     //if there is a goal in progress then user is allowed to cancel goal
@@ -43,6 +43,7 @@ void detect_input()
     	// call the function delete_goal with argument 1 to cancel the goal
         delete_goal(1);
     }
+    
     else if ((input_ch == 's' ||input_ch == 'S') && flag_for_goal) 
     {
     	// call the function delete_goal with argument 0 to quit the execution
@@ -51,6 +52,7 @@ void detect_input()
         ros::shutdown();
         exit(0);
     }
+    
     //if there aren't goal in progress then user is allowed to choose wheter to continue or not
     else if ((input_ch == 'y' || input_ch == 'Y' || input_ch == 'n' || input_ch == 'N') && !flag_for_goal)
     {
@@ -95,10 +97,10 @@ void delete_goal(int must_continue)
 
 void get_coordinates()
 {
+    //wait until two floats are inserted
+    
     system("clear");
     std::cout << "Automatic navigation \n\n";
-
-    //wait until two floats are inserted
     std::cout << "Insert x coordinate: \n\n";
     std::cin >> x;
     
@@ -114,10 +116,12 @@ void get_coordinates()
         std::cout << "Insert x coordinate: \n\n";
         std::cin >> x;
     }
+    
     system("clear");
     std::cout << "Automatic navigation \n\n";
     std::cout << "Insert y coordinate: \n\n";;
     std::cin >> y;
+    
     while (!std::cin.good())
     {
         std::cin.clear();
@@ -128,7 +132,7 @@ void get_coordinates()
         std::cin >> y;
     }
 
-    //build goal message using the goal coordinates given by keyboard input
+    // build goal message using the goal coordinates given by keyboard input
     // using a random generated id
     
     //generation of random id
@@ -137,6 +141,7 @@ void get_coordinates()
     goal.goal.target_pose.pose.position.y = y;
     goal.goal.target_pose.pose.orientation.w = 1;
     goal.goal.target_pose.header.frame_id = "map";
+    
     // to_string() convert the id into string type
     goal.goal_id.id = std::to_string(id);
 
@@ -149,7 +154,7 @@ void get_coordinates()
     //update the interface
     system("clear");
 
-    std::cout << "\nThe goal has been correctly set to\tx: " << x << "\ty: " << y << "\n\n";
+    std::cout << "\nThe goal has been set to\tx: " << x << "\ty: " << y << "\n\n";
 
     std::cout << "Press q and then press enter to cancel the goal, press s to quit the exexution\n\n";
 
@@ -173,7 +178,7 @@ void Handler(const actionlib_msgs::GoalStatusArray::ConstPtr &msg)
     //status of goal
     int status = 0;
 
-    //read only goals with correct id
+    //to read only goals with correct id
     if (msg->status_list[0].goal_id.id == std::to_string(id))
         status = msg->status_list[0].status;
 
@@ -182,10 +187,8 @@ void Handler(const actionlib_msgs::GoalStatusArray::ConstPtr &msg)
         return;
     }
 
-    //stop receiving messages from subscribed topic
     subscriber.shutdown();
 
-    //no more need of detect input
     flag_for_goal= 0;
 
     system("clear");
@@ -204,7 +207,6 @@ void Handler(const actionlib_msgs::GoalStatusArray::ConstPtr &msg)
 
 int main(int argc, char **argv)
 {
-    //used to randomize id
     srand(time(NULL));
 
     ros::init(argc, argv, "ReachPosition");

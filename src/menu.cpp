@@ -7,11 +7,11 @@ std_srvs::Empty reset;
 std::string menu = R"(
         
 Select one modality and then press enter:
-1 - Reach autonomousely a given position
-2 - Drive the robot with your keyboard
-3 - Drive the robot with your keyboard with assisted obstacles avoidance
-4 - Reset the simulation
-0 - Quit the execution
+1 : Reach autonomousely a given position
+2 : Drive the robot with your keyboard
+3 : Drive the robot with your keyboard with assisted obstacles avoidance
+4 : Reset the simulation
+0 : Quit the execution
 )";
 
 // function used to display the menu, take the input from keyboard
@@ -27,11 +27,11 @@ int Show_Menu()
     std::cout << "WELCOME!\n";
     std::cout << menu;
 
-    int mod;
+    int modality;
 
-    mod = getchar();
+    modality = getchar();
 
-    return mod;
+    return modality;
 }
 
 int main(int argc, char **argv)
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 		break;
 		
 		case '3':
-		    //launch driveWithKeyboardAssisted node
+		    //launch KeybooardDriveObs node
 		    system("rosrun RTassignment3 KeyboardDriveObs");
 		break;
 		

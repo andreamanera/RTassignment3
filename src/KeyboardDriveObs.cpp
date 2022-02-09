@@ -215,7 +215,7 @@ void choose_input(char input)
 	    case 'E':
 	    case 'e': 
 
-		//stop robot and exit
+		
 		vel.angular.z = 0;
 		vel.linear.x = 0;
 		publisher.publish(vel);
@@ -225,7 +225,6 @@ void choose_input(char input)
             break;
             
 	    default:
-		//stop robot
 		linear = 0;
 		angular = 0;
 	    break;
