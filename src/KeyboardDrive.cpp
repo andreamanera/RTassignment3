@@ -1,24 +1,51 @@
+/**
+* \file KeyboardDrive.cpp
+* \brief modality to drive the robot using the keyboard
+* \author Andrea Manera
+* \version 1.0.0
+* \date 12/03/2022
+*
+*
+* \details
+*
+* Publishes to:<BR>
+*  /cmd_vel to publish the velocity of the robot
+*
+* Description: 
+*
+* This node aims to give the user the possibility of moving the robot in the environment using the keyboard. To opportunetly manage robot movement in the environment I have decided to implement four
+* variables, two used for the velocity values (one for the linear velocity and one for the angular) and two used for the direction (again onefor the linear velocity and one for the angular).
+**/
+
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
 #include "sensor_msgs/LaserScan.h"
 #include <termios.h>
 
 
-ros::Publisher publisher;
+ros::Publisher publisher;///< Global publisher
 
 //defining variables for veloocity
-double velocity = 0.2;
-double turn_velocity = 0.5;
+double velocity = 0.2;///< Global variable for linear velocity
+double turn_velocity = 0.5;///< Global variable for turn velocity
 
 // defining variables used to define the direction
-int linear = 0; //linear direction
-int angular =0; //angular direction
+int linear = 0; ///< Global variable for linear direction
+int angular =0; ///< Global variable for angular direction
 
 // defining variable for Twist
-geometry_msgs::Twist vel;
+geometry_msgs::Twist vel; ///< Global variable for the overall velocity (linear & angular)
 
 // function to have non-blocking keyboard input
 // (avoid pressing enter)
+
+/**
+* \brief function to have non-blocking keyboard input
+* \return ch the input given from keyboard
+*
+* This function is needed to avoid pressing enter after giving an input from keyboard, 
+* this function is part of teleop_twist_keyboard.cpp.
+**/
 int getch(void)
 {
     int ch;
@@ -46,6 +73,14 @@ int getch(void)
 
 // function used to associate the input from keyboard with the correct command
 
+/**
+* \brief function to associate the input from keyboard with the correct command
+* \param input the input that we want to associate with the correct command
+*
+* This function is used to opportunetly manage the velocity, the input given by the user 
+* is associated with a specific operation thanks to a switch and so the velocity and the turn velocity are 
+* opportunetly modified
+**/
 void choose_input(char input)
 {
 
@@ -163,6 +198,13 @@ void choose_input(char input)
 
 // function used to display the menu and compute the velocity with the input taken by the keyboard
 
+/**
+* \brief get_input function to display commands and compute the velocity
+*
+* This function first of all display the menu with the commands with which the user can
+* modify the direction and the velocity then call the function choose input to compute the new
+* velocity and then asign the computed velocity to the elements of the variable vel
+**/
 void get_input()
 {
 
@@ -204,6 +246,16 @@ ALL OTHER KEYS WILL STOP THE ROBOT
     system("clear");
 }
 
+/**
+* \brief main
+*
+*
+* \param  argc An integer argument count of the command line arguments
+* \param  argv An argument vector of the command line arguments
+* \return an integer 0 upon success
+*
+* The main function contains the core part of the program
+**/
 int main(int argc, char **argv)
 {
     system("clear");

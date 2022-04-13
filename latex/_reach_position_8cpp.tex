@@ -1,0 +1,156 @@
+\hypertarget{_reach_position_8cpp}{}\doxysection{src/\+Reach\+Position.cpp File Reference}
+\label{_reach_position_8cpp}\index{src/ReachPosition.cpp@{src/ReachPosition.cpp}}
+
+
+modality to set a goal and let the robot reach it autonomously  
+
+
+{\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}move\+\_\+base\+\_\+msgs/\+Move\+Base\+Action\+Goal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}actionlib\+\_\+msgs/\+Goal\+Status\+Array.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}actionlib\+\_\+msgs/\+Goal\+I\+D.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+Include dependency graph for Reach\+Position.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_reach_position_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_reach_position_8cpp_a979c1eec3a680dc9742ca8f3a498bf5f}{get\+\_\+coordinates}} ()
+\begin{DoxyCompactList}\small\item\em function to get the goal coordinates \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_reach_position_8cpp_ab859e879694e6127351224cfac874342}{Handler}} (const actionlib\+\_\+msgs\+::\+Goal\+Status\+Array\+::\+Const\+Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em function to delete the goal \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_reach_position_8cpp_acfecdcc2c8ebd81159619cb8bd8d180e}{detect\+\_\+input}} ()
+\begin{DoxyCompactList}\small\item\em functtion to get the user input \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_reach_position_8cpp_ac202af5a188c6fd910fa5a0459f49a68}{delete\+\_\+goal}} (int must\+\_\+continue)
+\begin{DoxyCompactList}\small\item\em function to delete the goal \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_reach_position_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em main \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_reach_position_8cpp_ae057aae7fbba2a4cef62321020305295}\label{_reach_position_8cpp_ae057aae7fbba2a4cef62321020305295}} 
+ros\+::\+Publisher \mbox{\hyperlink{_reach_position_8cpp_ae057aae7fbba2a4cef62321020305295}{pub\+\_\+goal}}
+\begin{DoxyCompactList}\small\item\em Global publisher for the goal position. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_reach_position_8cpp_a33cbe548b1e0f6b08bbe754f53af458c}\label{_reach_position_8cpp_a33cbe548b1e0f6b08bbe754f53af458c}} 
+ros\+::\+Publisher \mbox{\hyperlink{_reach_position_8cpp_a33cbe548b1e0f6b08bbe754f53af458c}{pub\+\_\+cancel}}
+\begin{DoxyCompactList}\small\item\em Global publisher to cancel the goal. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_reach_position_8cpp_a22ff3f8747e9f68ad42bddad8e86e872}\label{_reach_position_8cpp_a22ff3f8747e9f68ad42bddad8e86e872}} 
+ros\+::\+Subscriber \mbox{\hyperlink{_reach_position_8cpp_a22ff3f8747e9f68ad42bddad8e86e872}{subscriber}}
+\begin{DoxyCompactList}\small\item\em Global subscriber. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_reach_position_8cpp_ad0da36b2558901e21e7a30f6c227a45e}\label{_reach_position_8cpp_ad0da36b2558901e21e7a30f6c227a45e}} 
+float {\bfseries x}
+\item 
+\mbox{\Hypertarget{_reach_position_8cpp_aa4f0d3eebc3c443f9be81bf48561a217}\label{_reach_position_8cpp_aa4f0d3eebc3c443f9be81bf48561a217}} 
+float \mbox{\hyperlink{_reach_position_8cpp_aa4f0d3eebc3c443f9be81bf48561a217}{y}}
+\begin{DoxyCompactList}\small\item\em Global coordinates of the goal. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_reach_position_8cpp_a7441ef0865bcb3db9b8064dd7375c1ea}\label{_reach_position_8cpp_a7441ef0865bcb3db9b8064dd7375c1ea}} 
+int \mbox{\hyperlink{_reach_position_8cpp_a7441ef0865bcb3db9b8064dd7375c1ea}{id}}
+\begin{DoxyCompactList}\small\item\em Global id of the goal. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_reach_position_8cpp_a277a26d89f87198b128da14ee46d39a7}\label{_reach_position_8cpp_a277a26d89f87198b128da14ee46d39a7}} 
+move\+\_\+base\+\_\+msgs\+::\+Move\+Base\+Action\+Goal \mbox{\hyperlink{_reach_position_8cpp_a277a26d89f87198b128da14ee46d39a7}{goal}}
+\begin{DoxyCompactList}\small\item\em Global overall goal. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_reach_position_8cpp_a910adc6e2561e7bb6644c09a3f851977}\label{_reach_position_8cpp_a910adc6e2561e7bb6644c09a3f851977}} 
+int \mbox{\hyperlink{_reach_position_8cpp_a910adc6e2561e7bb6644c09a3f851977}{flag\+\_\+for\+\_\+goal}}
+\begin{DoxyCompactList}\small\item\em Global flag to detect the user input during goal navigation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+modality to set a goal and let the robot reach it autonomously 
+
+\begin{DoxyAuthor}{Author}
+Andrea Manera 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+12/03/2022
+\end{DoxyDate}
+Subscribes to\+:~\newline
+ /move\+\_\+base/status to get the status of the robot
+
+Publishes to\+:~\newline
+ /move\+\_\+base/goal to publish te goal position /move\+\_\+base/cancel to cancel the goal
+
+Description\+:
+
+This node aims to, once a position has been given, drive the robot in the correct position in the environment. First of all the node requires from the user the x and y position of the goal, then a message of type move\+\_\+base\+\_\+msgs/\+Move\+Base\+Action\+Goal is generated and published in the /move\+\_\+base/goal topic. Every goal is tracked by the node with its id, that is randomly generated inside the node itself. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_reach_position_8cpp_ac202af5a188c6fd910fa5a0459f49a68}\label{_reach_position_8cpp_ac202af5a188c6fd910fa5a0459f49a68}} 
+\index{ReachPosition.cpp@{ReachPosition.cpp}!delete\_goal@{delete\_goal}}
+\index{delete\_goal@{delete\_goal}!ReachPosition.cpp@{ReachPosition.cpp}}
+\doxysubsubsection{\texorpdfstring{delete\_goal()}{delete\_goal()}}
+{\footnotesize\ttfamily void delete\+\_\+goal (\begin{DoxyParamCaption}\item[{int}]{must\+\_\+continue }\end{DoxyParamCaption})}
+
+
+
+function to delete the goal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em must\+\_\+continue} & to know if we have to stop or continue navigation\\
+\hline
+\end{DoxyParams}
+This function has been implemented to delete the goal if the user decides to do so, it also asks if the user wants to set a new goal \mbox{\Hypertarget{_reach_position_8cpp_acfecdcc2c8ebd81159619cb8bd8d180e}\label{_reach_position_8cpp_acfecdcc2c8ebd81159619cb8bd8d180e}} 
+\index{ReachPosition.cpp@{ReachPosition.cpp}!detect\_input@{detect\_input}}
+\index{detect\_input@{detect\_input}!ReachPosition.cpp@{ReachPosition.cpp}}
+\doxysubsubsection{\texorpdfstring{detect\_input()}{detect\_input()}}
+{\footnotesize\ttfamily void detect\+\_\+input (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+functtion to get the user input 
+
+This function is useful to get the input given by the user to decide if he wants to set a new goal, if he wants to stop the navigation to the goal or if he wants to quit the execution of the program \mbox{\Hypertarget{_reach_position_8cpp_a979c1eec3a680dc9742ca8f3a498bf5f}\label{_reach_position_8cpp_a979c1eec3a680dc9742ca8f3a498bf5f}} 
+\index{ReachPosition.cpp@{ReachPosition.cpp}!get\_coordinates@{get\_coordinates}}
+\index{get\_coordinates@{get\_coordinates}!ReachPosition.cpp@{ReachPosition.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_coordinates()}{get\_coordinates()}}
+{\footnotesize\ttfamily void get\+\_\+coordinates (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+function to get the goal coordinates 
+
+This function has been implemented to set the goal coordinates, it asks the goal coordinates set a random id for the goal and assign the goal coordinates to the variable goal, it calls the function detect\+\_\+inputs() to give the possibility of sttopping the navigation in every moment \mbox{\Hypertarget{_reach_position_8cpp_ab859e879694e6127351224cfac874342}\label{_reach_position_8cpp_ab859e879694e6127351224cfac874342}} 
+\index{ReachPosition.cpp@{ReachPosition.cpp}!Handler@{Handler}}
+\index{Handler@{Handler}!ReachPosition.cpp@{ReachPosition.cpp}}
+\doxysubsubsection{\texorpdfstring{Handler()}{Handler()}}
+{\footnotesize\ttfamily void Handler (\begin{DoxyParamCaption}\item[{const actionlib\+\_\+msgs\+::\+Goal\+Status\+Array\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+function to delete the goal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & contains the infos provided by the robot scanner\\
+\hline
+\end{DoxyParams}
+The function Handler check the status of the goal to let the user know if the goal has been reache or if cannot be reached in this last case it ask if he wants to set a new goal \mbox{\Hypertarget{_reach_position_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{_reach_position_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{ReachPosition.cpp@{ReachPosition.cpp}!main@{main}}
+\index{main@{main}!ReachPosition.cpp@{ReachPosition.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+main 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & An integer argument count of the command line arguments \\
+\hline
+{\em argv} & An argument vector of the command line arguments \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an integer 0 upon success
+\end{DoxyReturn}
+The main function contains the core part of the program 

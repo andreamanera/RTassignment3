@@ -1,3 +1,27 @@
+/**
+* \file ReachPosition.cpp
+* \brief modality to set a goal and let the robot reach it autonomously
+* \author Andrea Manera
+* \version 1.0.0
+* \date 12/03/2022
+*
+*
+* \details
+*
+* Subscribes to:<BR>
+*  /move_base/status to get the status of the robot
+*
+* Publishes to:<BR>
+*  /move_base/goal to publish te goal position
+*  /move_base/cancel to cancel the goal
+*
+* Description: 
+*
+* This node aims to, once a position has been given, drive the robot in the correct position in the environment.
+* First of all the node requires from the user the x and y position of the goal, then a message of type move_base_msgs/MoveBaseActionGoal
+* is generated and published in the /move_base/goal topic. Every goal is tracked by the node with its id, that is randomly generated inside the node itself.
+**/
+
 #include "ros/ros.h"
 #include "move_base_msgs/MoveBaseActionGoal.h"
 #include "actionlib_msgs/GoalStatusArray.h"
@@ -5,21 +29,21 @@
 #include <time.h>
 
 // defining two publisher and one subscriber
-ros::Publisher pub_goal;
-ros::Publisher pub_cancel;
+ros::Publisher pub_goal;///< Global publisher for the goal position
+ros::Publisher pub_cancel;///< Global publisher to cancel the goal
 
-ros::Subscriber subscriber;
+ros::Subscriber subscriber;///< Global subscriber
 
 // variables needed for goal coordinates
-float x, y;
+float x, y;///< Global coordinates of the goal
 
 // variable needed for goal id
-int id;
+int id;///< Global id of the goal
 
 // variable for goal
 // the package move_base_msgs contains the messages used to communicate with the move_base node. 
 // The move_base package provides an implementation of an action that, given a goal in the world, will attempt to reach it
-move_base_msgs::MoveBaseActionGoal goal;
+move_base_msgs::MoveBaseActionGoal goal;///< Global overall goal
 
 // defining functions prototypes
 void get_coordinates();
@@ -29,9 +53,14 @@ void delete_goal(int must_continue);
 
 
 // flag used to detect the user input during goal navigation
-int flag_for_goal;
+int flag_for_goal;///< Global flag to detect the user input during goal navigation
 
-
+/**
+* \brief functtion to get the user input
+*
+* This function is useful to get the input given by the user to decide if he wants to set a new
+* goal, if he wants to stop the navigation to the goal or if he wants to quit the execution of the program
+**/
 void detect_input()
 {
     //get an user input
@@ -66,6 +95,13 @@ void detect_input()
     }
 }
 
+/**
+* \brief function to delete the goal
+* \param must_continue to know if we have to stop or continue navigation
+*
+* This function has been implemented to delete the goal if 
+* the user decides to do so, it also asks if the user wants to set a new goal
+**/
 void delete_goal(int must_continue)
 {
     //build cancel message with goal id
@@ -95,6 +131,14 @@ void delete_goal(int must_continue)
     }
 }
 
+/**
+* \brief function to get the goal coordinates 
+*
+* This function has been implemented to set the goal coordinates, it asks the 
+* goal coordinates set a random id for the goal and assign the goal coordinates 
+* to the variable goal, it calls the function detect_inputs() to give the possibility of
+* sttopping the navigation in every moment
+**/
 void get_coordinates()
 {
     //wait until two floats are inserted
@@ -173,6 +217,13 @@ void get_coordinates()
     spinner.stop();
 }
 
+/**
+* \brief function to delete the goal
+* \param msg contains the infos provided by the robot scanner 
+*
+* The function Handler check the status of the goal to let the user know if 
+* the goal has been reache or if cannot be reached in this last case it ask if he wants to set a new goal
+**/
 void Handler(const actionlib_msgs::GoalStatusArray::ConstPtr &msg)
 {
     //status of goal
@@ -205,6 +256,16 @@ void Handler(const actionlib_msgs::GoalStatusArray::ConstPtr &msg)
     std::cout << "\nDo you want to set another goal? (y/n)\n";
 }
 
+/**
+* \brief main
+*
+*
+* \param  argc An integer argument count of the command line arguments
+* \param  argv An argument vector of the command line arguments
+* \return an integer 0 upon success
+*
+* The main function contains the core part of the program
+**/
 int main(int argc, char **argv)
 {
     srand(time(NULL));

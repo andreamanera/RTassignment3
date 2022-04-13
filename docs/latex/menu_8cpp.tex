@@ -1,0 +1,112 @@
+\hypertarget{menu_8cpp}{}\doxysection{src/menu.cpp File Reference}
+\label{menu_8cpp}\index{src/menu.cpp@{src/menu.cpp}}
+
+
+user interface for research track 1 third assignment  
+
+
+{\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}std\+\_\+srvs/\+Empty.\+h\char`\"{}}\newline
+Include dependency graph for menu.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{menu_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{menu_8cpp_a78818bc888eff6372008d85eca3d9c94}{Show\+\_\+\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em function used to display the menu, take the input from keyboard \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{menu_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em main \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{menu_8cpp_a6152f16bf158b6835560cc7ab9ac085f}\label{menu_8cpp_a6152f16bf158b6835560cc7ab9ac085f}} 
+std\+\_\+srvs\+::\+Empty \mbox{\hyperlink{menu_8cpp_a6152f16bf158b6835560cc7ab9ac085f}{reset}}
+\begin{DoxyCompactList}\small\item\em Global variable to reset the simulation. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{menu_8cpp_ad4a9b22f455eca62be99f73e3b5aa873}{menu}}
+\begin{DoxyCompactList}\small\item\em Global variable to print the menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+user interface for research track 1 third assignment 
+
+\begin{DoxyAuthor}{Author}
+Andrea Manera 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+12/03/2022
+\end{DoxyDate}
+Services\+:~\newline
+ /gazebo/reset\+\_\+simulation used to reset the simulation in gazebo
+
+Description\+:
+
+This is the first node developed, it has the purpose of showing an interface in which the user can choose the modality, reset the simulation or quit the execution of the program. When an input is given the node run the correct command to launch a node thanks to the system() function. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{menu_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{menu_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{menu.cpp@{menu.cpp}!main@{main}}
+\index{main@{main}!menu.cpp@{menu.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+main 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & An integer argument count of the command line arguments \\
+\hline
+{\em argv} & An argument vector of the command line arguments \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an integer 0 upon success
+\end{DoxyReturn}
+The main function through a while loop associate a specific input taken from keyboard to a specific modality which is executed thanks to the system function \mbox{\Hypertarget{menu_8cpp_a78818bc888eff6372008d85eca3d9c94}\label{menu_8cpp_a78818bc888eff6372008d85eca3d9c94}} 
+\index{menu.cpp@{menu.cpp}!Show\_Menu@{Show\_Menu}}
+\index{Show\_Menu@{Show\_Menu}!menu.cpp@{menu.cpp}}
+\doxysubsubsection{\texorpdfstring{Show\_Menu()}{Show\_Menu()}}
+{\footnotesize\ttfamily int Show\+\_\+\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+function used to display the menu, take the input from keyboard 
+
+\begin{DoxyReturn}{Returns}
+modality the input taken from keyboard
+\end{DoxyReturn}
+The function print a short message and the menu showing all the possible commands and then take the input of the user from keyboard to run a specific modality 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{menu_8cpp_ad4a9b22f455eca62be99f73e3b5aa873}\label{menu_8cpp_ad4a9b22f455eca62be99f73e3b5aa873}} 
+\index{menu.cpp@{menu.cpp}!menu@{menu}}
+\index{menu@{menu}!menu.cpp@{menu.cpp}}
+\doxysubsubsection{\texorpdfstring{menu}{menu}}
+{\footnotesize\ttfamily std\+::string menu}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= R\textcolor{stringliteral}{"(}}
+\DoxyCodeLine{\textcolor{stringliteral}{        }}
+\DoxyCodeLine{\textcolor{stringliteral}{Select one modality and then press enter:}}
+\DoxyCodeLine{\textcolor{stringliteral}{1 : Reach autonomousely a given position}}
+\DoxyCodeLine{\textcolor{stringliteral}{2 : Drive the robot with your keyboard}}
+\DoxyCodeLine{\textcolor{stringliteral}{3 : Drive the robot with your keyboard with assisted obstacles avoidance}}
+\DoxyCodeLine{\textcolor{stringliteral}{4 : Reset the simulation}}
+\DoxyCodeLine{\textcolor{stringliteral}{0 : Quit the execution}}
+\DoxyCodeLine{\textcolor{stringliteral}{)"}}
+
+\end{DoxyCode}
+
+
+Global variable to print the menu. 
+
